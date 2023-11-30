@@ -18,6 +18,8 @@ active & killed. Notifee provides a simple API for handling both scenarios.
 
 ## Foreground Events
 
+> If you're on iOS and you're using `react-native-firebase` with data-only messages, please see the note below (TODO) iOS and `react-native-firebase` and data-only messages
+
 An application is deemed in the "foreground" only under the following situation:
 
 - The device is unlocked, and the application is running & is in view (foreground).
@@ -130,7 +132,7 @@ which can be called early on in your React lifecycle to obtain the notification 
 
 > `getInitialNotification` is deprecated on iOS in favour of the `PRESS` event received by the `onForegroundEvent` event handler
 
-It is recommended to always check if a notification has caused your app to open before displaying the main app content.
+It is recommended to always check if a notification has caused your app to open before displaying the main app content. For iOS, this means that `onForegroundEvent
 Once consumed, the initial notification is removed.
 
 For example, setup a "bootstrap" function inside of the root component of your application:
@@ -172,3 +174,6 @@ opening a chat screen with a specific user who trigger the notification.
 
 Once the initial notification has been consumed with a call to `getInitialNotification`, it is removed. If the app re-opens
 before the initial notification has been consumed (e.g. the user manual closing & reopening), it will not be available.
+
+## iOS and `react-native-firebase` and data-only messages
+Instead of `getInitialNotification()` you will have to use the `onForegroundEvent()` and register a listener for you to immediately handle the notification that opened the app.
